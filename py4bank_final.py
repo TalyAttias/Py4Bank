@@ -400,31 +400,25 @@ elif page==pages[4]:
     # Chargement des modèles
     cl_LR = load('cl_LR.joblib') 
     cl_SVM = load('cl_SVM.joblib') 
-    cl_KNN = load('cl_KNN.joblib') 
     cl_DTC = load('cl_DTC.joblib') 
     cl_RFC = load('cl_RFC.joblib') 
     cl_AC = load('cl_AC.joblib') 
-    cl_BC = load('cl_BC.joblib') 
 
     cl_LR_final = load('cl_LR_final.joblib') 
     cl_RFC_final = load('cl_RFC_final.joblib') 
 
-    model_choisi = st.selectbox(label = "Choix du modèle", options = ['Régression Logistique', 'SVM', 'KNN', 'Decision Tree', 'Forêt aléatoire', 'Adaboost', 'Bagging'])
+    model_choisi = st.selectbox(label = "Choix du modèle", options = ['Régression Logistique', 'SVM', 'Decision Tree', 'Forêt aléatoire', 'Adaboost'])
     def test_model(model_choisi): 
         if model_choisi == 'Régression Logistique':
             model = cl_LR
         elif model_choisi == 'SVM':
             model = cl_SVM
-        elif model_choisi == 'KNN':
-            model = cl_KNN
         elif model_choisi == 'Decision Tree': 
             model = cl_DTC
         elif model_choisi == 'Forêt aléatoire':
             model = cl_RFC
         elif model_choisi == 'Adaboost':
             model = cl_AC
-        elif model_choisi == 'Bagging':
-            model = cl_BC
         score = model.score(X_test,y_test)
         return score
 
@@ -433,16 +427,12 @@ elif page==pages[4]:
             avantages = st.markdown("<font color='green'>Avantages : Score supérieur à 0.8, interprétabilité excellente, temps d’entraînement rapide</font>", unsafe_allow_html=True)
         elif model_choisi == 'SVM':
             avantages = st.markdown("<font color='green'>Avantages : Score supérieur à 0.8</font>", unsafe_allow_html=True)
-        elif model_choisi == 'KNN':
-            avantages = ""
         elif model_choisi == 'Decision Tree': 
             avantages = ""
         elif model_choisi == 'Forêt aléatoire':
             avantages = st.markdown("<font color='green'>Avantages : Score le plus élevé, supérieur à 0.8</font>", unsafe_allow_html=True)
         elif model_choisi == 'Adaboost':
             avantages = ""
-        elif model_choisi == 'Bagging':
-            avantages = st.markdown("<font color='green'>Avantages : Score supérieur à 0.8</font>", unsafe_allow_html=True)
         return avantages
 
     def inconvenients_model(model_choisi): 
@@ -450,16 +440,12 @@ elif page==pages[4]:
             inconvenients = st.markdown("<font color='red'>Inconvénients : Score légèrement inférieur à d'autres modèles comme la Random Forest</font>", unsafe_allow_html=True)
         elif model_choisi == 'SVM':
             inconvenients = st.markdown("<font color='red'>Inconvénients : difficulté à identifier les bonnes valeurs des paramètres, difficulté d’interprétations (ex. pertinence des variables), temps d’entraînement excessivement long</font>", unsafe_allow_html=True)
-        elif model_choisi == 'KNN':
-            inconvenients = st.markdown("<font color='red'>Inconvénients : Score inférieur à 0.8 (trop faible par rapport aux autres modèles)</font>", unsafe_allow_html=True)
         elif model_choisi == 'Decision Tree': 
             inconvenients = st.markdown("<font color='red'>Inconvénients : Score inférieur à 0.8 (trop faible par rapport aux autres modèles)</font>", unsafe_allow_html=True)
         elif model_choisi == 'Forêt aléatoire':
             inconvenients = st.markdown("<font color='red'>Inconvénients : Interprétabilité moins bonne qu'une régression logistique</font>", unsafe_allow_html=True)
         elif model_choisi == 'Adaboost':
             inconvenients = st.markdown("<font color='red'>Inconvénients : Score inférieur à 0.8 (trop faible par rapport aux autres modèles)</font>", unsafe_allow_html=True)
-        elif model_choisi == 'Bagging':
-            inconvenients = st.markdown("<font color='red'>Inconvénients : Score qui ne dépasse pas un modèle similaire et légèrement plus rapide : le Random Forest</font>", unsafe_allow_html=True)
         return inconvenients
       
     st.write("Test score", test_model(model_choisi))
